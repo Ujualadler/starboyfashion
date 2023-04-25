@@ -1,0 +1,141 @@
+<%- include('../adminLayout/adminHeader'); -%>
+
+
+
+
+  <div class="container tm-mt-big tm-mb-big">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
+          <h2 class="tm-block-title">Bnner Management</h2>
+          <div class="tm-product-table-container">
+            <table class="table tm-table-small tm-product-table">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col">No</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Action</th>
+                  <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if(banner.length>0) {%>
+                  <% for( let i=0; i < banner.length; i++ ) { %>
+                    <tr class="text-center">
+                      <td class="">
+                        <%= i + 1 %>
+                      </td>
+                      <td class="">
+                        <%= banner[i].title %>
+                      </td>
+                      <td class=""><img src="/img/<%= banner[i].image[0] %>" width="70" height="70"></td>
+                      <% if (banner[i].is_ban===0) { %>
+                      <td>
+                        <a href="/admin/banner/ban?id=<%= banner[i]._id %>" id="del" class="tm-product-delete-link">
+                          <i class="fa-sharp fa-solid fa-flag tm-product-delete-icon text-danger"></i>
+                        </a>
+                        <a href="/admin/banner/edit?id=<%= banner[i]._id %>" id="del" class="tm-product-delete-link">
+                          <i class="fa-sharp fa-solid fa-pen-to-square tm-product-delete-icon"></i>
+                        </a>
+                      </td>
+                      <% }else{ %>
+                        <td>
+                          <a href="/admin/banner/ban?id=<%= banner[i]._id %>" id="del" class="tm-product-delete-link">
+                            <i class="fa-sharp fa-solid fa-flag tm-product-delete-icon text-danger "></i>
+                          </a>
+                        </td>
+                        <% } %>
+                      <td>
+                        <a href="/admin/banner/delete?id=<%= banner[i]._id %>" id="del" class="tm-product-delete-link">
+                          <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <% }}else{ %>
+
+                      <tr class="text-center">
+                        <td class="">
+                          <h2>No banner availabe </h2>
+                        </td>
+                      </tr>
+                      <% } %>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-6  mx-auto tm-login-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+          <div class="row">
+            <div class="col-12 text-center">
+              <h2 class="tm-block-title mb-4">To add Banner</h2>
+              <% if (mes !=null) { %>
+                <script>
+                  swal({
+                    title: "Successfully Added Banner!",
+                    text: " <%= mes %> ",
+                    icon: "success",
+                    timer: 3000,
+                    showConfirmButton: false
+                  })
+                </script>
+                <% } %>
+                  <% if (message !=null) { %>
+                    <script>
+                      swal({
+                        title: "Success",
+                        text: " <%= message %> !",
+                        icon: "error",
+                        timer: 5000
+                      })
+                    </script>
+                    <% } %>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <form action="/admin/banner" method="post" class="tm-login-form" enctype="multipart/form-data">
+                <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+
+                  <div class="mb-3 ml-5">
+
+
+
+                  </div>
+
+                  <input id="fileInput" type="file" name="image" onchange="viweImage(event)" style="display:none;"
+                    multiple />
+                  <input type="button" class="btn btn-primary btn-block mx-auto" value="IMAGE" name="image"
+                    onclick="document.getElementById('fileInput').click();" />
+                </div>
+            </div>
+            <div class="form-group mt-3">
+              <label for="password">Title</label>
+              <input name="title" type="text" class="form-control validate" id="" required />
+            </div>
+            <div class="form-group mt-3">
+              <label for="password">Description</label>
+              <input name="description" type="text" class="form-control validate" id="" required />
+            </div>
+            <div class="form-group mt-4">
+              <button type="submit" class="btn btn-primary btn-block text-uppercase">
+                Submit
+              </button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script>
+    function viweImage(event) {
+      document.getElementById('imageView').src = URL.createObjectURL(event.target.files[0])
+    }
+  </script>
+
+
+  <%- include('../adminLayout/adminFooter'); -%>

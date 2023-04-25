@@ -1,0 +1,159 @@
+<%- include('../adminLayout/adminHeader'); -%>
+  <style>
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.719);
+      opacity: 100;
+    }
+  </style>
+
+  <div class="container tm-mt-big tm-mb-big">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
+          <h2 class="tm-block-title">Coupon Details</h2>
+          <div class="tm-product-table-container">
+            <table class="table tm-table-small tm-product-table">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col">Coupon-Title</th>
+                  <th scope="col">Coupon Code</th>
+                  <th scope="col">Expiry Date</th>
+                  <th scope="col">Min Amount</th>
+                  <th scope="col">Max amount</th>
+                  <th scope="col">Min-discount</th>
+                  <th scope="col">Max-discount</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Delete</th>
+
+                </tr>
+              </thead>
+              <tbody>
+
+                <% if (couponDetails.length>0) {
+                  couponDetails.forEach(coupon => {%>
+                  <tr class="text-center">
+                    <td class="">
+                      <%=coupon.couponName%>
+                    </td>
+                    <td class="">
+                      <%=coupon.couponId%>
+                    </td>
+                    <td class="">
+                      <%=coupon.expiryDate%>
+                    </td>
+                    <td class="">
+                      <%=coupon.minAmount %>
+                    </td>
+                    <td class="">
+                      <%=coupon.maxAmount%>
+                    </td>
+                    <td class="">
+                      <%=coupon.discount%>%
+                    </td>
+                    <td class="">
+                      <%=coupon.max_discount%>%
+                    </td>
+                    <td class="">
+                      <%=coupon.status%>
+                    </td>
+                    <td>
+                      <a href="/admin/delete/coupon?id=<%=coupon._id %>" id="del" class="tm-product-delete-link">
+                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                      </a>
+
+                    </td>
+                  </tr>
+                  <% }); } else {%>
+                    <h2>No coupon available</h2>
+                    <% } %>
+
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-lg-6  mx-auto tm-login-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+          <div class="row">
+            <div class="col-12 text-center">
+              <h2 class="tm-block-title mb-3">Add Coupon</h2>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <form action="/admin/addcoupon" method="post" class="tm-login-form">
+                <div class="form-group mt-2">
+
+                  <input style="height: 10px;" placeholder="Title" type="text" name="couponName"
+                    class="form-control validate" id="" required />
+                </div>
+                <div class="form-group mt-2">
+
+                  <input style="height: 10px;" placeholder="couponId" type="text" name="couponId"
+                    class="form-control validate" id="" required />
+                </div>
+                <div class="form-group mt-2">
+
+                  <input style="height: 10px;" placeholder="expiry-Date" type="date" name="expiryDate"
+                    class="form-control validate" id="" required />
+                </div>
+                <div class="form-group mt-2">
+
+                  <input style="height: 10px;" name="minAmount" type="text" class="form-control validate" id=""
+                    placeholder="Minimum Amount" required />
+                </div>
+                <div class="form-group mt-2">
+
+                  <input name="maxAmount" type="text" class="form-control validate " style="height: 10px;" id=""
+                    placeholder="Maximum Amount" required />
+                </div>
+
+                <div class="form-group mt-2">
+
+                  <input style="height: 10px;" name="discount" type="text" class="form-control validate" id=""
+                    placeholder=" min Discount in %" required />
+                </div>
+                <div class="form-group mt-2">
+
+                  <input style="height: 10px;" name="maxdiscount" type="text" class="form-control validate" id=""
+                    placeholder=" max Discount in %" required />
+                </div>
+                <div class="form-group mt-3">
+                  <button type="submit" class="btn btn-primary btn-block text-uppercase">
+                    Submit
+                  </button>
+                </div>
+              </form>
+              <% if (message !=null) { %>
+                <script>
+                  swal({
+                    title: "Warning!",
+                    text: " <%= message %> ",
+                    icon: "warning",
+                    timer: 1000,
+                    showConfirmButton: false
+                  })
+                </script>
+                <% } %>
+                  <% if (mes !=null) { %>
+                    <script>
+                      swal({
+                        title: "DONE",
+                        text: " <%= mes %> ",
+                        icon: "success",
+                        timer: 3000,
+                        showConfirmButton: false
+                      })
+                    </script>
+                    <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <%- include ('../adminLayout/adminFooter') -%>

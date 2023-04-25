@@ -1,0 +1,100 @@
+<%- include('../adminLayout/adminHeader'); -%>
+
+
+
+    <div class="container tm-mt-big tm-mb-big">
+        <div class="row">
+            <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+                <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="tm-block-title d-inline-block">Edit Banner</h2>
+                        </div>
+                    </div>
+                    <div class="row tm-edit-product-row">
+                        <div class="col-xl-6 col-lg-6 col-md-12">
+                            <form onsubmit="return validateForm();" action="/admin/banner/edit?id=<%=bannerData._id%>"
+                                method="post" enctype="multipart/form-data" class="tm-edit-product-form">
+                                <div class="form-group mb-3">
+                                    <label for="name">Title
+                                    </label>
+                                    <input id="name" name="title" type="text" value="<%=bannerData.title%>"
+                                        class="form-control validate" />
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" class="form-control validate" rows="3"
+                                        name="description"><%=bannerData.description%></textarea>
+                                </div>
+                        </div>
+
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+
+                        <div class="mb-3 ml-5">
+
+                            <img src="/img/<%= bannerData.image[0] %>" width="220 " height="200" id="imageView">
+
+
+                        </div>
+
+                        <input id="fileInput" type="file" name="images" onchange="viweImage(event)"
+                            style="display:none;" multiple />
+                        <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD BANNER IMAGE"
+                            name="images" onclick="document.getElementById('fileInput').click();" />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn-block text-uppercase">Edit Banner Now</button>
+                </div>
+                </form>
+                <% if (mes !=null) { %>
+                    <script>
+                        swal({
+                            title: "Successfully Updated!",
+                            text: " <%= mes %> ",
+                            icon: "success",
+                            timer: 5000,
+                            showConfirmButton: false
+                        })
+                    </script>
+                    <% } %>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <%- include('../adminLayout/adminFooter'); -%>
+
+        <script>
+            function validateForm() {
+                let name = document.getElementById("name").value.trim();
+                let description = document.getElementById("description").value.trim();
+                let fileInput = document.getElementById("fileInput");
+
+                // Check if the title is not empty
+                if (name === "") {
+                    alert("Please enter a title");
+                    return false;
+                }
+
+                // Check if the description is not empty
+                if (description === "") {
+                    alert("Please enter a description");
+                    return false;
+                }
+
+                // Get the file extension
+                let fileExtension = fileInput.files[0].name.split(".").pop();
+
+                // Check if the file extension is valid (e.g., png, jpg, jpeg)
+                if (!["png", "jpg", "jpeg"].includes(fileExtension.toLowerCase())) {
+                    alert("Please select a valid image file (png, jpg, jpeg)");
+                    return false;
+                }
+
+                return true;
+            }
+        </script>

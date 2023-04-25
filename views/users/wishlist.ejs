@@ -1,0 +1,104 @@
+<%- include('../layouts/header.ejs'); -%>
+
+
+  <!-- breadcrumb -->
+  <div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+
+    </div>
+  </div>
+
+
+  <!-- Shoping Cart -->
+  <div class="bg0 p-t-75 p-b-85">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+          <div class="m-l-25 m-r--38 m-lr-0-xl">
+            <div class="wrap-table-shopping-cart">
+              <% if(user.wishlist.length>0){%>
+                <table class="table-shopping-cart">
+                  <tr class="table_head" id="heading">
+                    <th class="column-1"></th>
+                    <th class="column-1">Product</th>
+                    <th class="column-1">Price</th>
+                    <th class="column-1">Add to cart</th>
+                    <th class="column-1">Remove</th>
+                  </tr>
+
+                  <% for( let i=0; i <user.wishlist.length; i++ ) { %>
+
+                    <tr class="table_row" id="<%=user.wishlist[i].product._id%>">
+                      <td class="column-1">
+                        <div class="how-itemcart1">
+                          <img src="/img/<%=user.wishlist[i].product.image[0]%>" alt="IMG">
+                        </div>
+                      </td>
+                      <td class="column-1">
+                        <%=user.wishlist[i].product.name%>
+                      </td>
+
+
+                      <td class="column-1">
+                        ₹<%=user.wishlist[i].product.price%>
+                      </td>
+
+                      <td class="column-1"> <a class="flex-c-m stext-101  size-71 bg-0 text-dark hov3  " href="/addToCartWish?id=<%=user.wishlist[i].product._id%>">Add to cart</a></td>
+
+                      <td class="column-1"><button onclick="remove('<%=user.wishlist[i].product._id%>')"
+                        class="flex-m stext-101  size-50 bg-0 text-dark  hov3   ">REMOVE
+                        </button></td>
+
+                      <div id="empty1234" style="display: none;" class="text-center ">
+
+                        <div colspan="5" class="text-danger text-center">Missing wishlist items!!!!</div>
+                      </div>
+
+
+                    </tr>
+                    <% }}else {%>
+                      <h2>No Item Available</h2>
+                      <% } %>
+                </table>
+
+
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+
+
+    function remove(productId) {
+      console.log('jdbfkjf');
+      $.ajax({
+        type: "GET",
+        url: `/wishlist/delete?id=${productId}`,
+        success: function (response) {
+          swal({
+            title: "Good job!",
+            text: response.message,
+            icon: "success",
+            button: "oh yes!",
+          });
+          const divToRemove = document.getElementById(productId);
+          divToRemove.remove()
+          const div = document.getElementById('empty1234')
+          response.qua === 1 ? div.style.display = 'block' : console.log('sflssfjnfjbsf');
+
+          const heading = document.getElementById('heading')
+          heading.style.display = 'none';
+        },
+      });
+    }
+
+
+  </script>
+  <%- include('../layouts/footer.ejs'); -%>

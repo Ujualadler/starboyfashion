@@ -1,0 +1,257 @@
+<%- include('../adminLayout/adminHeader'); -%>
+
+
+
+  <div class="container tm-mt-big tm-mb-big">
+    <div class="row">
+      <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="tm-block-title d-inline-block">Add Product</h2>
+            </div>
+          </div>
+          <div class="row tm-edit-product-row">
+            <div class="col-xl-6 col-lg-6 col-md-12">
+              <form id="form1" action="/admin/home/product/add" method="post" enctype="multipart/form-data"
+                class="tm-edit-product-form">
+                <div class="form-group mb-3">
+                  <label for="name">Product Name
+                  </label>
+                  <input id="name" name="name" type="text" class="form-control validate" /> <span
+                    class="text-danger error"></span>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="name">Brand
+                  </label>
+                  <input id="brand" name="brand" type="text" class="form-control validate" /> <span
+                    class="text-danger error"></span>
+                </div>
+                <div class="form-group mb-3">
+                  <label id="description" for="description">Description</label>
+                  <textarea class="form-control validate" rows="3" id="description" name="description"></textarea>
+                  <span class="text-danger error"></span>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="category">Category</label>
+                  <select class="custom-select tm-select-accounts" id="category" name="category">
+                    <option selected>Select category</option>
+
+                    <% if (category.length> 0) { %>
+                      <% for( let i=0; i < category.length; i++ ) { %>
+                        <option value="<%= category[i].name %>">
+                          <%= category[i].name %>
+                            <% } %>
+                              <% } %>
+                        </option>
+
+
+                  </select>
+                  <span class="text-danger error"></span>
+                </div>
+                <div class="row">
+                  <div class="form-group mb-3 col-xs-12 col-sm-6">
+                    <label for="expire_date">Price
+                    </label>
+                    <input id="price" name="price" type="text" class="form-control validate"
+                      data-large-mode="true" /><span class="text-danger error"></span>
+                  </div>
+                  <div class="form-group mb-3 col-xs-12 col-sm-6">
+                    <label for="stock">Quantity
+                    </label>
+                    <input id="stock" name="quantity" type="text" class="form-control validate" /><span
+                      class="text-danger error"></span>
+                  </div>
+
+                  <p class="p-0 mb-4 text-white">SIZE</p>
+                  <div class="text-white mt-3">
+                    <input class="p-2" type="checkbox" name="size" value="xs">
+                    <label class="p-2" for="">XS</label>
+                    <input class="p-2" type="checkbox" name="size" value="s">
+                    <label class="p-2" for="">S</label>
+                    <input class="p-2" type="checkbox" name="size" value="m">
+                    <label class="p-2" for="">M</label>
+                    <input class="p-2" type="checkbox" name="size" value="xl">
+                    <label class="p-2" for="">XL</label>
+                    <input class="p-2" type="checkbox" name="size" value="xxl">
+                    <label class="p-2" for="">XXL</label>
+
+
+                  </div>
+
+                </div>
+
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+              <style>
+                /* Style for image preview */
+                .image-preview {
+                  max-width: 100px;
+                  max-height: 100px;
+                  margin: 10px;
+                }
+              </style>  
+              <div class="custom-file mt-3 mb-3">
+                <div id="image-preview-container" class="row mb-4 "></div>
+                <input name="images" id="fileInput" type="file" style="display:none;" multiple/>
+                <input
+                id="file"
+                  type="button"
+                  class="btn btn-primary btn-block mx-auto"
+                  value="UPLOAD PRODUCT IMAGE"
+                  onclick="document.getElementById('fileInput').click();"
+                />
+                <span class="text-danger error" ></span>
+
+              </div>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary btn-block text-uppercase">Add Product Now</button>
+            </div>
+            </form>
+            <% if (mes!=null) { %>
+              <script>
+                swal({
+                  title: "INFO",
+                  text: " <%= mes %> ",
+                  icon: "success",
+                  timer: 5000
+
+                })
+              </script>
+              <% } %>
+                <% if (message!=null) { %>
+                  <script>
+                    swal({
+                      title: "INFO",
+                      text: " <%= message %> ",
+                      icon: "warning",
+                      timer: 5000
+
+                    })
+                  </script>
+                  <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function viweImage(event) {
+      document.getElementById('imageView').src = URL.createObjectURL(event.target.files[0])
+    }
+
+  </script>
+  <%- include('../adminLayout/adminFooter'); -%>
+
+
+
+    </script>
+
+
+    <!-- Include the SweetAlert CSS and JavaScript files -->
+
+
+    <script type="text/javascript">
+      const form = document.getElementById('form1')
+      const name1 = document.getElementById('name')
+      const brand1 = document.getElementById('brand')
+      const price1 = document.getElementById('price')
+      const stock1 = document.getElementById('stock')
+      const category1 = document.getElementById('category')
+
+      const seterror = (element, message) => {
+        const inputControll = element.parentElement;
+        const errorDisplay = inputControll.querySelector('.error')
+
+        errorDisplay.innerText = message
+        inputControll.classList.add('error')
+        inputControll.classList.remove('success')
+      }
+      const setSuccess = (element) => {
+        const inputControll = element.parentElement;
+        const errorDisplay = inputControll.querySelector('.error')
+
+        errorDisplay.innerText = ''
+        inputControll.classList.remove('success')
+        inputControll.classList.add('error')
+      }
+
+      form.addEventListener('submit', e => {
+        const productname = name1.value.trim()
+        const productbrand = brand1.value.trim()
+        const productprice = price1.value.trim()
+        const productstock = stock1.value.trim()
+        const productcategory = category1.value.trim()
+
+        if (productname == '') {
+          seterror(name1, 'this field is required')
+          e.preventDefault()
+        } else {
+          setSuccess(name1)
+        }
+        //////////////////////
+        if (productbrand == '') {
+          seterror(brand1, 'this field is required')
+          e.preventDefault()
+        } else {
+          setSuccess(brand1)
+        }
+        //////////////////////
+        if (productprice == '') {
+          seterror(price1, 'this field is required')
+          e.preventDefault()
+        } else if (productprice <= 0) {
+          seterror(price1, 'invalid input')
+          e.preventDefault()
+        } else if (isNaN(productprice)) {
+          seterror(price1, 'must be a number')
+          e.preventDefault()
+        } else {
+          setSuccess(price1)
+        }
+        ///////////////////////
+        if (productstock == '') {
+          seterror(stock1, 'this field is required')
+          e.preventDefault()
+        } else if (productstock <= 0) {
+          seterror(stock1, 'invalid input')
+          e.preventDefault()
+        } else if (isNaN(productstock)) {
+          seterror(stock1, 'must be a number')
+          e.preventDefault()
+        } else {
+          setSuccess(stock1)
+        }
+        ////////////////////////
+        if (productcategory == '') {
+          seterror(category1, 'this field is required')
+          e.preventDefault()
+        } else {
+          setSuccess(category1)
+        }
+
+      })
+    </script>
+    <script>
+      document.getElementById('fileInput').addEventListener('change', function(event) {
+      var files = event.target.files;
+      var imagePreviewContainer = document.getElementById('image-preview-container');
+      imagePreviewContainer.innerHTML = ''; // Clear previous previews
+
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          var imagePreview = document.createElement('div');
+          imagePreview.className = 'image-preview col-4';
+          imagePreview.style.objectFit ='contianer'
+          imagePreview.innerHTML = '<img src="' + e.target.result + '" alt="Image Preview" class="image-preview">';
+          imagePreviewContainer.appendChild(imagePreview);
+        };
+
+        reader.readAsDataURL(file);
+      }
+    });
+    </script>

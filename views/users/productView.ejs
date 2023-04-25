@@ -1,0 +1,199 @@
+<%- include('../layouts/header.ejs',{session}); -%>
+
+
+
+
+
+	<!-- breadcrumb -->
+	<div class="container">
+		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+
+		</div>
+	</div>
+
+
+	<!-- Product Detail -->
+	<section class="sec-product-detail bg0 p-t-65 p-b-60">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-lg-7 p-b-30">
+					<div class="p-l-25 p-r-30 p-lr-0-lg">
+						<div class="wrap-slick3 flex-sb flex-w">
+							<div class="wrap-slick3-dots"></div>
+							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+
+							<div class="slick3 gallery-lb">
+								<% for( let i=0; i <3; i++ ) { %>
+
+									<div class="item-slick3 " data-thumb="img/<%= product.image[i] %>">
+
+										<div class="wrap-pic-w pos-relative">
+											<a href="img/<%= product.image[i] %>" class="MagicZoom"
+												data-options="zoomPosition: inner"><img
+													src="img/<%= product.image[i] %>" alt="IMG-PRODUCT"></a>
+
+											<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+												href="img/<%= product.image[i] %>">
+												<i class="fa fa-expand"></i>
+											</a>
+										</div>
+									</div>
+									<% } %>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6 col-lg-5 p-b-30">
+					<div class="p-r-50 p-t-5 p-lr-0-lg">
+						<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+							<%=product.name %>
+						</h4>
+
+						<span class="mtext-106 cl2">
+							₹<%=product.price %>
+						</span>
+
+						<p class="stext-102 cl3 p-t-23">
+							<%=product.description %>
+						</p>
+
+						<!--  -->
+						<form action="/addToCart?id=<%=product._id%>" method="post" onsubmit="return validateForm()">
+							<div class="p-t-33">
+								<div class="flex-w flex-r-m p-b-14">
+									<div style="font-weight: bold;" class="size-203  respon6">
+										SELECT SIZE
+									</div>
+									<div class="size-204 ">
+										<div class="rs1-select2 bor8 bg-0">
+											<% for( let i=0; i <product.size.length; i++ ) { %>
+												<select class="js-select2" name="size" id="sizeSelect" min="1" max="10">
+
+
+													<option style="color: black;">
+														<%=product.size[i]%>
+													</option>
+
+													<% } %>
+
+												</select>
+												<div class="dropDownSelect2"></div>
+										</div>
+									</div>
+								</div>
+								<% if (mes!=null) { %>
+									<script>
+										swal({
+											title: "SUCCESS",
+											text: " <%=mes%> !",
+											icon: "success",
+											button: "ok"
+										})
+									</script>
+									<% } %>
+
+
+
+										<div
+											class="size-220   d-flex justify-content-center align-items-center mb-3 mt-5 ">
+											<div class="me-2">
+												<button type="submit" style="border: 1px solid black;"
+													class="flex-c-m stext-101 cl0 size-101 bg-0 text-dark bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
+													data-bs-toggle="modal" data-bs-target="#cart">ADD TO CART
+
+												</button>
+											</div>
+											<div>
+												<a href="/addwishlist?id=<%=product._id%>"
+													class="flex-c-m stext-101 cl0 size-101 bg-dark bor1 hov-btn3 p-lr-15 trans-04 js-addcart-detail"
+													data-tooltip="Add to Wishlist">
+													ADD TO WISHLIST
+												</a>
+											</div>
+										</div>
+							</div>
+						</form>
+
+						<!--  -->
+
+						<div class="size-204 flex-w flex-m respon6-next d-flex justify-content-center">
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="bor10 m-t-50 p-t-43 p-b-40">
+				<!-- Tab01 -->
+				<div class="tab01">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="nav-item p-b-10">
+							<a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
+						</li>
+						<li class="nav-item p-b-10">
+							<a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
+						</li>
+					</ul>
+
+					<!-- Tab panes -->
+					<div class="tab-content p-t-43">
+						<!-- - -->
+						<div class="tab-pane fade show active" id="description" role="tabpanel">
+							<div class="how-pos2 p-lr-15-md">
+								<p class="stext-102 cl6">
+									<%=product.description %>
+							</div>
+						</div>
+
+						<div class="tab-pane fade" id="reviews" role="tabpanel">
+							<div class="row">
+								<div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+									<div class="p-b-30 m-lr-15-sm">
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
+			<span class="stext-107 cl6 p-lr-25">
+				<%= product.name %>
+			</span>
+
+			<span class="stext-107 cl6 p-lr-25">
+				Category:<%=product.category.name %>
+			</span>
+		</div>
+	</section>
+
+
+
+
+
+	<%- include('../layouts/footer.ejs'); -%>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+		<script>
+
+			function validateForm() {
+				var sizeSelect = document.querySelector('#sizeSelect');
+				var selectedSize = sizeSelect.options[sizeSelect.selectedIndex].value;
+
+				if (selectedSize === 'Choose a Size') {
+					swal.fire({
+						title: 'Error',
+						text: 'Please select a size',
+						icon: 'error'
+					});
+					return false;
+				}
+
+				return true;
+			}
+		</script>

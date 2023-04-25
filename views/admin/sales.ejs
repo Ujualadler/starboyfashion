@@ -1,0 +1,171 @@
+<%- include('../adminLayout/adminHeader'); -%>
+
+  <style>
+    .scroll {
+      overflow: scroll;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+    }
+    @media (max-width: 576px) {
+    .tm-product-table-container {
+      overflow-x: auto;
+    }
+  }
+  </style>
+
+  <div class="container mt-5">
+    <div class="row tm-content-row justify-content-center">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 tm-block-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-products">
+          <div class="tm-product-table-container mb-0">
+            <h3 class="text-center mb-5 text-light">SALES REPORT</h3>
+
+ 
+            <div class="row">
+              <div class=" col-4 mb-5 "  >
+                <form onsubmit=" return validateDates()" class="d-flex justify-content-between"  action="/admin/sales" method="post">
+                  <label for="first" class="text-light" >From Date:
+                  <input class="ms-2" style="border: solid 1px black; background-color: rgb(182, 24, 56);color: WHITE;" id="first"
+                    name="first" type="date" required min="2021-01-01" max="2023-12-31"></label>
+                  <label for="last" class="text-light">To Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input class="ms-2 me-2"  style=" border:solid 1px black;background-color: rgb(182, 24, 56);color: WHITE;" id="last"
+                    name="last" type="date" required min="2021-01-01" max="2023-12-31"></label>
+                    <br>
+                  <button   type="submit" style=" text-align: center; border: solid 1px black;"
+                    class="btn btn-danger">submit</button>
+
+                </form>
+
+              </div>
+              
+            </div>
+            <div class="col-4 mb-3  d-flex justify-content-between">
+              <button style="border: solid 1px black" onclick="exportToExcel()" class="btn btn-dark">download</button>
+          
+              <button style="border: solid 1px black" class="btn btn-dark" onclick="demoFromHTML()">Print</button>
+            </div>
+
+            <% if(filterData.length!=0){ %>
+
+              <div id="dash" class="scroll">
+                <table id="salesTable" class="ms-5 table table-dark">
+                  <thead>
+                    <tr>
+                      <th scope="col">NO</th>
+                      <th scope="col">NAME</th>
+                      <th scope="col">PRODUCT</th>
+                      <th scope="col">DATE</th>
+                      <th scope="col">PRICE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% filterData.forEach((value, i)=> { %>
+
+                      <tr>
+                        <th scope="row">
+                          <%= i + 1 %>
+                        </th>
+                        <td>
+                          <%= value.address[0].name %>
+                        </td>
+                        <td>
+                          <%= value.order[0].product.name %>
+                        </td>
+                        <td>
+                          <%= new Date(value.order[0].deliveredDate).toLocaleDateString('en-GB') %>
+                        </td>
+
+                        <td>₹<%= value.order[0].total %>
+                        </td>
+                      </tr>
+                      <% }) %>
+
+                  </tbody>
+                </table>
+              </div>
+              <% }else{ %>
+
+                <tr>
+                  <div colspan="5" class="text-center text-danger " style="font-size: larger;">No Reports to Show !!!!
+                  </div>
+
+                </tr>
+                <% } %>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <section class="row vw-100 m-0 p-0  ">
+
+  </section>
+  <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+  <script>
+
+    function demoFromHTML() {
+      console.log('hdbvj');
+      printTable()
+      function printTable() {
+        var table = document.getElementById("salesTable");
+        var newWin = window.open('', 'Print-Window');
+        newWin.document.open();
+        newWin.document.write('<html><body onload="window.print()">' + table.outerHTML + '</html>');
+        newWin.document.close();
+        setTimeout(function () { newWin.close(); }, 10);
+      }
+
+    }
+  </script>
+
+  <script>
+
+    function validateDates() {
+      var firstDate = new Date(document.getElementById('first').value);
+      var lastDate = new Date(document.getElementById('last').value);
+      if (firstDate > lastDate) {
+        swal({
+          title: "Error",
+          text: "The first date must be earlier than the second date.",
+          icon: "error",
+          button: "OK",
+        });
+        return false;
+      }
+      return true;
+    }
+
+    function exportToExcel() {
+  const table = document.getElementById('salesTable');
+  const workbook = XLSX.utils.table_to_book(table, {sheet:"Sales Data"});
+  const sheetName = workbook.SheetNames[0];
+  const worksheet = workbook.Sheets[sheetName];
+  worksheet['!protect'] = {
+    // Set your protection options here
+    selectLockedCells: false, // Allow users to select locked cells
+    formatCells: true, // Allow users to format cells
+    insertRows: true, // Allow users to insert rows
+    insertColumns: true, // Allow users to insert columns
+    password: 'mypassword', // Set a password to unlock the sheet
+  };
+  XLSX.writeFile(workbook, 'sales_data.xlsx');
+}
+  </script>
+
+
+
+  <%- include('../adminLayout/adminFooter'); -%>

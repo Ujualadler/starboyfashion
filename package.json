@@ -1,0 +1,38 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "y",
+  "main": "yy",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "y"
+  },
+  "repository": {
+    "type": "git",
+    "url": "y"
+  },
+  "author": "y",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.15.0",
+    "fs": "^0.0.1-security",
+    "mongoose": "^6.9.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nocache": "^3.0.4",
+    "nodemailer": "^6.9.1",
+    "path": "^0.12.7",
+    "razorpay": "^2.8.6",
+    "sharp": "^0.32.0",
+    "sweetalert": "^2.1.2",
+    "twilio": "^4.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

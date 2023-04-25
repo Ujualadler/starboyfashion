@@ -1,0 +1,203 @@
+<%- include('../layouts/header.ejs'); -%>
+
+  <style>
+    @media (max-width: 768px) {
+      .order-details-container {
+        padding-top: 30px;
+      }
+    }
+  </style>
+
+
+  <div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+    </div>
+  </div>
+  <div class="container my-5 order-details-container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card shadow" style="padding-left: 23px">
+          <div class="card-header">
+            <h3 class="text-center">View order</h3>
+            <a href="/userDetails" class="btn-3 float-end">
+              <i class="fa fa-reply"></i> Back</a>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 col-lg-6">
+                <h4>Shipping Details</h4>
+                <hr />
+                <label class="mt-2"> Name</label>
+                <div class="border p-1">
+                  <%=orderData.address[0].name %>
+                </div>
+                <label class="mt-2">Email</label>
+                <div class="border p-1">
+                  <%=orderData.address[0].email %>
+                </div>
+                <label class="mt-2">Phone Number</label>
+                <div class="border p-1">
+                  <%=orderData.address[0].mobileNo %>
+                </div>
+                <label class="mt-2">Delivery Address</label>
+                <div class="border p-1">
+                  <%=orderData.address[0].house%>, <%=orderData.address[0].townCity%>,
+                      <%=orderData.address[0].district%>,<%=orderData.address[0].state%>,PIN:
+                          <%=orderData.address[0].pincode%> <br />
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 ">
+                <div style="margin-top:15px;"><h4>Order Details</h4><div>
+                </hr>
+                <div class="table-responsive">
+                  <table class="table table-borderless">
+                    <thead class="text-muted">
+                      <tr class="small text-uppercase">
+                        <th scope="col">Product</th>
+                        <th scope="col" class="text-center">Quantity</th>
+                        <%  if(orderData.order[0].status=="OrderConfirmed" || orderData.order[0].status=="OrderShipped"
+                        ){%>
+                        <th scope="col" class="text-center">Expected delivery Date</th>
+                        <%}%>
+                        <th scope="col" class="text-center">Product Price</th>
+                        <th scope="col" class="text-center">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for( let i=0; i < orderData.order.length; i++ ) { %>
+                        <tr>
+                          <td>
+                            <figure class=" align-items-center">
+                              <div class="how-itemcart1">
+                                <img src="/img/<%=orderData.order[i].product.image[0]%>" style="height: 100px"
+                                  alt="IMG" />
+                                <p>
+                                  <%=orderData.order[i].product.name%>
+                                </p>
+                              </div>
+                            </figure>
+                          </td>
+                          <td class="column text-center">
+                            <label class="my-3" for="">
+                              <%=orderData.order[i].quantity%>
+                            </label>
+                          </td>
+                          <%  if(orderData.order[i].status=="OrderConfirmed" || orderData.order[i].status=="OrderShipped"
+                        ){%>
+                          <td class="column text-center">
+                            <label class="my-3" for="">
+                              <%=new Date(orderData.order[i].arrivingDate).toLocaleDateString('en-GB')%>
+                            </label>
+                          </td>
+                          <%}%>
+                          <td>
+                            <div class="price-wrap my-3 column text-center">
+                              <var class="price"> ₹ <%=orderData.order[i].total%></var><br />
+                            </div>
+                            <!-- price-wrap .// -->
+                          </td>
+                          <td>
+                            <div class="price-wrap my-3 column text-center">
+                              <span id="order-<%=orderData._id  %>-status" class="orderdetails price"
+                                style="color: darkgreen;">
+                                <%=orderData.order[i].status%>
+                              </span><br />
+                            </div>
+                            <!-- price-wrap .// -->
+                          </td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                  </table>
+                  <hr />
+                  <div>
+                    <br />
+                    <h5>
+
+                      Sub Total: ₹<%=orderData.subTotal%>
+                        <br >
+                    </h5>
+                    <br>
+                    <%if(orderData.discount!=null){%>
+                    <h5>
+
+                      Discount applied(%): <%=orderData.discount%>
+                        <br>
+                    </h5>
+                    <%}%>
+                    <br>
+                    <h5>
+
+                      Grand Total: ₹<%=orderData.grandTotal%>
+                        <br />
+                    </h5>
+                    <br />
+                    <br />
+                    <h6>
+                      <%  if(orderData.order[0].status=="OrderConfirmed" || orderData.order[0].status=="OrderShipped"
+                        ){%>
+                        <button onclick="render('<%=orderData._id%>')" class="btn btn-danger btn-sm"
+                          id="refundButton1">Cancel Order</button>
+
+
+                    </h6>
+                    <%}else if(orderData.order[0].status=="OrderDelivered" ){%>
+                      <h6>
+
+                        <button onclick="returned('<%=orderData._id%>')" class="btn btn-danger btn-sm"
+                          id="refundButton2">Return Order</button>
+                      </h6>
+                      <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include('../layouts/footer.ejs'); -%>
+
+
+        <script>
+          function render(id) {
+            $.ajax({
+              type: "post",
+              url: `/cancelOrder?id=${id}`,
+              success: function (data) {
+                const statusElement = document.querySelectorAll(`#order-${id}-status`);
+                for (let i = 0; i < statusElement.length; i++) {
+                  statusElement[i].innerHTML = data.status
+                }
+
+                if (data.status == "OrderCancelled") {
+                  let button = document.getElementById('refundButton1')
+                  button.style.display = 'none'
+                }
+
+              },
+              error: function (data) {
+                console.log(error);
+              }
+            });
+          }
+
+
+          function returned(id) {
+            $.ajax({
+              type: "post",
+              url: `/returnOrder?id=${id}`,
+              success: function (data) {
+                const statusElement = document.querySelectorAll(`#order-${id}-status`);
+                for (let i = 0; i < statusElement.length; i++) {
+                  statusElement[i].innerHTML = data.status
+                }
+              },
+              error: function (data) {
+                console.log(error);
+              }
+            });
+          }
+
+
+
+        </script>

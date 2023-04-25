@@ -1,0 +1,76 @@
+<%- include('../adminLayout/adminHeader.ejs') %>
+
+    <div class="container mt-5">
+        <div class="row tm-content-row ">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-products">
+                    <div class="tm-product-table-container">
+                        <form action="">
+                            <input type="search" placeholder="search" name="search">
+                            <input type="submit" value="search">
+                        </form>
+                        <table class="table table-hover tm-table-small tm-product-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">NAME</th>
+                                    <th scope="col">EMAIL</th>
+                                    <th scope="col">MOBILE</th>
+                                    <th scope="col">ACTION</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(users.length>0){
+                                    for(let i=0;i<users.length;i++){ %>
+                                        <tr>
+                                            <td scope="row">
+                                                <%= users[i].name %>
+                                            </td>
+                                            <td>
+                                                <%= users[i].email %>
+                                            </td>
+                                            <td>
+                                                <%= users[i].mobile %>
+                                            </td>
+                                            <td>
+
+
+                                                <%if(users[i].is_block===1){ %>
+                                                    <button type="submit" class="btn btn-success"
+                                                        style="width:120px ;"><a
+                                                            class=" text-light text-decoration-none "
+                                                            href="/admin/block_user?id=<%- users[i]._id%>">UNBLOCK</a></button>
+
+                                                    <%}else{%>
+                                                        <button type="submit" class="btn btn-danger"
+                                                            style="width:120px  "><a
+                                                                class=" text-light text-decoration-none "
+                                                                href="/admin/block_user?id=<%- users[i]._id%>">BLOCK</a></button>
+                                                        <%}%>
+
+                                            </td>
+
+                                        </tr>
+                                        <% } }else{%>
+                                            <tr>
+                                                <td colspan="4" class="text-danger">Don't have Products</td>
+                                            </tr>
+                                            <% } %>
+
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+    <%- include('../adminLayout/adminFooter.ejs') %>

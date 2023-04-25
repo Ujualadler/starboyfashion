@@ -1,0 +1,127 @@
+<%- include('../adminLayout/adminHeader'); -%>
+
+
+
+
+  <div class="container tm-mt-big tm-mb-big">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
+          <h2 class="tm-block-title">Product Categories</h2>
+          <div class="tm-product-table-container">
+            <table class="table tm-table-small tm-product-table">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col">NO</th>
+                  <th scope="col">CATEGORY</th>
+                  <th scope="col">Delete</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <% if (category.length> 0) { %>
+                  <% for( let i=0; i < category.length; i++ ) { %>
+
+
+                    <tr class="text-center">
+                      <td class="">
+                        <%= i + 1 %>
+                      </td>
+                      <td class="">
+                        <%= category[i].name%>
+                      </td>
+                      <td>
+                        <a href="/admin/delete/category?id=<%= category[i]._id %>" id="del"
+                          class="tm-product-delete-link">
+                          <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                        </a>
+                        <% if (message !=null) { %>
+                          <script>
+                            swal({
+                              title: "Failed",
+                              text: " <%= message %> !",
+                              icon: "error",
+                              timer: 5000
+                            })
+                          </script>
+                          <% } %>
+                            <% } %>
+                      </td>
+                    </tr>
+                    <% }else{ %>
+                      <tr>
+                        <td class="tm-product-name">didn't have any category</td>
+                      </tr>
+                      <% } %>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-6  mx-auto tm-login-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+          <div class="row">
+            <div class="col-12 text-center">
+              <h2 class="tm-block-title mb-4">To add Category</h2>
+              <% if (mes !=null) { %>
+                <script>
+                  swal({
+                    title: "Successfully Added Category!",
+                    text: " <%= mes %> ",
+                    icon: "success",
+                    timer: 3000,
+                    showConfirmButton: false
+                  })
+                </script>
+                <% } %>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <form action="/admin/home/category/add" method="post" class="tm-login-form">
+                <div class="form-group mt-3">
+                  <label for="password">Category</label>
+                  <input name="category" type="text" class="form-control validate" id="category" />
+                  <span class="text-danger error"></span>
+                </div>
+                <div class="form-group mt-4">
+                  <button type="submit" class="btn btn-primary btn-block text-uppercase">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <%- include('../adminLayout/adminFooter'); -%>
+
+    <script>
+      const form = document.querySelector('.tm-login-form');
+      const categoryInput = form.querySelector('#category');
+      const errorSpan = form.querySelector('.error');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const category = categoryInput.value.trim();
+
+        if (category === '') {
+          errorSpan.textContent = 'Category is required';
+          return;
+        }
+
+        if (/^\s*$/.test(category)) {
+          errorSpan.textContent = 'Category cannot be only whitespace';
+          return;
+        }
+
+        form.submit();
+      });
+
+    </script>

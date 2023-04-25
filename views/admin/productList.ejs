@@ -1,0 +1,138 @@
+<%- include('../adminLayout/adminHeader'); -%>
+
+
+
+    <div class="container mt-5">
+        <div class="row tm-content-row ">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-products">
+                    <div class="tm-product-table-container">
+                        <table class="table table-hover tm-table-small tm-product-table">
+                            <thead class="text-center">
+                                <tr>
+
+                                    <th scope="col">No</th>
+                                    <th scope="col">NAME</th>
+                                    <th scope="col">IMAGE</th>
+                                    <th scope="col">PRICE</th>
+                                    <th scope="col">STOCK</th>
+                                    <th scope="col">CATEGORY</th>
+                                    <th scope="col">ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <% if(products.length>0){%>
+                                    <% for(i=0;i<products.length;i++) {%>
+
+
+                                        <tr>
+                                            <td scope="row">
+                                                <%= i+1 %>
+                                                    </th>
+                                            <td class="tm-product-name">
+                                                <%= products[i].name%>
+                                            </td>
+                                            <td><img src="/img/<%= products[i].image[0] %>" width="70" height="70">
+                                            </td>
+                                            <td>
+                                                <%= products[i].price%>
+                                            </td>
+                                            <td>
+                                                <%= products[i].quantity%>
+                                            </td>
+                                            <td>
+                                                <%= products[i].category.name%>
+                                            </td>
+                                            <td>
+
+                                                <% if (products[i].is_flag===0) { %>
+
+
+
+
+
+                                                    <a href="/admin/home/product/edit?id=<%= products[i]._id %>"
+                                                        class="tm-product-delete-link">
+                                                        <i
+                                                            class="fa-sharp fa-solid fa-pen-to-square tm-product-delete-icon "></i>
+                                                    </a>
+                                                    <a href="/admin/flagProduct?id=<%= products[i]._id %>"
+                                                        class="tm-product-delete-link" >
+                                                        <i
+                                                            class="fa-sharp fa-solid fa-flag tm-product-delete-icon text-white"></i>
+                                                    </a>
+                                                    <!-- Modal
+                                                    <div class="modal fade" id="logout" tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">
+                                                                        CONFIRMATION
+                                                                    </h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    DO YOU WANT TO DELETE THE PODUCT?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                    <a href="/admin/flagProduct?id="
+                                                                        class="btn btn-primary">CONFIRM
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
+
+                                                    <% }else{ %>
+                                                        <a href="/admin/flagProduct?id=<%= products[i]._id %>"
+                                                            class="tm-product-delete-link">
+                                                            <i
+                                                                class="fa-sharp fa-solid fa-flag tm-product-delete-icon text-danger"></i>
+                                                        </a>
+
+
+                                                        <% } %>
+
+                                            </td>
+                                        </tr>
+                                        <% }} else { %>
+                                            <tr>
+                                                <td colspan="4" class="text-danger">Don't have Products</td>
+                                            </tr>
+
+                                            <% } %>
+                                                <% if (mes !=null) { %>
+                                                    <script>
+                                                        swal({
+                                                            title: "Successfully Added Product!",
+                                                            text: " <%= mes %> ",
+                                                            icon: "success",
+                                                            timer: 2000,
+                                                            showConfirmButton: false
+                                                        })
+                                                    </script>
+                                                    <% } %>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="/admin/home/product/add" class="btn btn-primary btn-block text-uppercase mb-3">Add new
+                        product</a>
+
+                    <a href="/admin/home/category/add" class="btn btn-primary btn-block text-uppercase mb-3"> Add new
+                        category</a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <%- include('../adminLayout/adminFooter'); -%>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>STAR BOY</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="/login-form-20/css/style.css">
+
+</head>
+
+<body class="img js-fullheight">
+	<section class="ftco-section"
+		style="background-image: url(/login-form-20/images/newlogo.jpg); background-size: cover; height:100vh;">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Enter OTP Here</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center align-items-center">
+				<div class="col-md-6 col-lg-4">
+					<div class="login-wrap ">
+
+						<form action="/otpverification" method="post" class="signin-form">
+							<div class="form-group">
+								<input id="password-field" type="number" class="form-control text-center" name="otp"
+									placeholder="Enter your OTP here" required>
+								<span toggle="#password-field"
+									class="fa fa-fw fa-eye field-icon toggle-password"></span>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="form-control btn btn-primary submit px-3">SUBMIT
+									OTP</button>
+							</div>
+							<% if (mes!=null) { %>
+								<div class="text-center"><small class="text-warning " style="font-size: large;">
+										<%= mes %>
+									</small></div>
+
+								<% } %>
+									<div class="form-group d-md-flex">
+										<div class="w-50" style="margin-left: 6rem;">
+											<label class="checkbox-wrap checkbox-primary"><a href="/login">EMAIL
+													LOGIN</a>
+
+											</label>
+										</div>
+
+									</div>
+						</form>
+						<button type="button" id="resend-otp" class="btn-primary">
+							Resend OTP
+						</button>
+					</div>
+				</div>
+				<p class="w-100 text-center">&mdash;<a href="/register">Register Here</a>&mdash;</p>
+
+			</div>
+		</div>
+		</div>
+		</div>
+	</section>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(() => {
+			const resendOtpButton = $('#resend-otp');
+			let countdown = 10;
+
+			function startCountdown() {
+				const countdownInterval = setInterval(() => {
+					if (countdown > 0) {
+						countdown--;
+						resendOtpButton.html(`Resend OTP (${countdown})`);
+					} else {
+						clearInterval(countdownInterval);
+						resendOtpButton.html('Resend OTP');
+						resendOtpButton.prop('disabled', false);
+						countdown = 10;
+					}
+				}, 1000);
+			}
+
+			startCountdown(); // start the countdown immediately
+
+			resendOtpButton.on('click', () => {
+				resendOtpButton.prop('disabled', true);
+
+				$.ajax({
+					type: 'POST',
+					url: '/resendOtp',
+					success: () => {
+						countdown = 10; // reset countdown
+						startCountdown();
+					},
+					error: (xhr, status, error) => {
+						console.error(error);
+					},
+				});
+			});
+		});
+	</script>
+
+
+
+
+	<input class="m-2 text-center form-control rounded in" type="text" id="first" maxlength="1" name="otp" required />
+	<input class="m-2 text-center form-control rounded in" type="text" id="second" maxlength="1" name="otp" required />
+	<input class="m-2 text-center form-control rounded in" type="text" id="third" maxlength="1" name="otp" required />
+	<input class="m-2 text-center form-control rounded in" type="text" id="fourth" maxlength="1" name="otp" required />
+	<input class="m-2 text-center form-control rounded in" type="text" id="fifth" maxlength="1" name="otp">
+
+	<script src="/login-form-20/js/jquery.min.js"></script>
+	<script src="/login-form-20/js/popper.js"></script>
+	<script src="/login-form-20/js/bootstrap.min.js"></script>
+	<script src="/login-form-20/js/main.js"></script>
+
+</body>
+
+</html>

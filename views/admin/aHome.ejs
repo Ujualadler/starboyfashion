@@ -1,0 +1,371 @@
+<%- include('../adminLayout/adminHeader'); -%>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col justify-content-between">
+        <p class="text-white mt-5 mb-5 d-flex justify-content-between">Welcome back, Admin </p>
+
+      </div>
+    </div>
+    <div class="container-fluid py-4">
+      <div class="row">
+        <%if(dailySalesReport!=0){%>
+          <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="card bg-dark">
+              <div class="card-header p-3 pt-2 ">
+                <div
+                  class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                  <i class="material-icons opacity-10"></i>
+                </div>
+                <div class="text-end pt-1 text-white">
+                  <p class="text-sm mb-0 text-capitalize text-white">Today's Sales</p>
+                  <h4 class="mb-0">₹<%=dailySalesReport[0].totalSales%>
+                  </h4>
+                </div>
+              </div>
+              <hr class="dark horizontal my-0">
+              <div class="card-footer p-3">
+                <p class="mb-0 text-white"><span class="text-success text-sm font-weight-bolder">
+                    <%=dailySalesReport[0].totalItemsSold%>
+                  </span> Products sold today</p>
+              </div>
+            </div>
+          </div>
+          <%}else{%>
+            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+              <div class="card bg-dark">
+                <div class="card-header p-3 pt-2 ">
+                  <div
+                    class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                    <i class="material-icons opacity-10"></i>
+                  </div>
+                  <div class="text-end pt-1 text-white ">
+                    <p class="text-sm mb-0 text-capitalize text-white ">Today's Sales</p>
+                    <h4 class="mb-0">₹0</h4>
+                  </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                  <p class="mb-0 text-white"><span class="text-success text-sm font-weight-bolder">0 </span> Products
+                    sold today</p>
+                </div>
+              </div>
+            </div>
+            <%}%>
+              <%if(weeklySalesReport!=0){%>
+                <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                  <div class="card text-white bg-dark">
+                    <div class="card-header p-3 pt-2">
+                      <div
+                        class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10"></i>
+                      </div>
+                      <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">This week collection</p>
+                        <h4 class="mb-0">₹ <%= weeklySalesReport[0].totalSales %>
+                        </h4>
+                      </div>
+                    </div>
+                    <hr class="dark horizontal my-0">
+                    <div class="card-footer p-3">
+                      <p class="mb-0"><span class="text-success text-sm font-weight-bolder">
+                          <%= weeklySalesReport[0].totalItemsSold%>
+                        </span> Products sold this week</p>
+                    </div>
+                  </div>
+                </div>
+                <%}else{%>
+                  <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                    <div class="card text-white bg-dark">
+                      <div class="card-header p-3 pt-2">
+                        <div
+                          class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+                          <i class="material-icons opacity-10"></i>
+                        </div>
+                        <div class="text-end pt-1">
+                          <p class="text-sm mb-0 text-capitalize">This week collection</p>
+                          <h4 class="mb-0">₹ 0
+                          </h4>
+                        </div>
+                      </div>
+                      <hr class="dark horizontal my-0">
+                      <div class="card-footer p-3">
+                        <p class="mb-0"><span class="text-success text-sm font-weight-bolder">
+                            0
+                          </span> Products sold this week</p>
+                      </div>
+                    </div>
+                  </div>
+                  <%}%>
+                    <%if(yearlySalesReport!=0){%>
+                      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                        <div class="card text-white bg-dark">
+                          <div class="card-header p-3 pt-2">
+                            <div
+                              class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                              <i class="material-icons opacity-10"></i>
+                            </div>
+                            <div class="text-end pt-1">
+                              <p class="text-sm mb-0 text-capitalize">Yearly sales report</p>
+                              <h4 class="mb-0">₹ <%= yearlySalesReport[0].totalSales%>
+                              </h4>
+                            </div>
+                          </div>
+                          <hr class="dark horizontal my-0">
+                          <div class="card-footer p-3">
+                            <p class="mb-0"><span class="text-success text-sm font-weight-bolder">
+                                <%= yearlySalesReport[0].totalItemsSold %>
+                              </span> Products sold this year</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <%}else{%>
+                        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                          <div class="card text-white bg-dark">
+                            <div class="card-header p-3 pt-2">
+                              <div
+                                class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                                <i class="material-icons opacity-10"></i>
+                              </div>
+                              <div class="text-end pt-1">
+                                <p class="text-sm mb-0 text-capitalize">Yearly sales report</p>
+                                <h4 class="mb-0">₹ 0
+                                </h4>
+                              </div>
+                            </div>
+                            <hr class="dark horizontal my-0">
+                            <div class="card-footer p-3">
+                              <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">
+                                  0
+                                </span> Products sold this year</p>
+                            </div>
+                          </div>
+                        </div>
+                        <%}%>
+                          <div class="col-xl-3 col-sm-6">
+                            <div class="card text-white bg-dark">
+                              <div class="card-header p-3 pt-2">
+                                <div
+                                  class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                                  <i class="material-icons opacity-10"></i>
+                                </div>
+                                <div class="text-end pt-1">
+                                  <p class="text-sm mb-0 text-capitalize">Users</p>
+                                  <h4 class="mb-0">
+                                    <%=usersLength%>
+                                  </h4>
+                                </div>
+                              </div>
+                              <hr class="dark horizontal my-0">
+                              <div class="card-footer p-3">
+                                <p class="mb-0"><span class="text-success text-sm font-weight-bolder">50% </span> than
+                                  previous month</p>
+                              </div>
+                            </div>
+                          </div>
+                       </div>
+                   </div>
+
+                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                  <div class="row tm-content-row">
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 tm-block-col">
+                      <div class="tm-bg tm-block" style="background-color: rgb(42, 55, 67);">
+                        <h2 class="tm-block-title">Daily Sales</h2>
+                          <canvas id="lineChart"></canvas>
+                            <button class="" style="background:none; color: white; border: none; position: relative; bottom: 20px;"
+                              onclick="downloadlineChart()"><i class="fa fa-download" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 tm-block-col">
+                      <div class="tm-bg-primary-dark tm-block" style="background-color: rgb(42, 55, 67);">
+                        <h2 class="tm-block-title">Total Payments</h2>
+                        <canvas style="margin: 0 auto;" id="piechart"></canvas>
+                        <button class="" style="background: none; color: white; border: none;" onclick="downloadpieChart()"><i
+                            class="fa fa-download" aria-hidden="true"></i></button>
+                      </div>
+              
+              
+                      <script>
+                        var orders = '<%= JSON.stringify(order) %>';
+                        const dataa = JSON.parse(orders.replace(/&#34;/g, '"'));
+              
+                        const ctxx = document.getElementById('piechart');
+                        var myChart = new Chart(ctxx, {
+                          type: 'pie',
+                          data: {
+                            labels: ['COD', 'razorpay', 'wallet'],
+                            datasets: [{
+                              label: 'Mode of Payment',
+                              data: [dataa[0].codCount, dataa[0].razorpayCount, dataa[0].walletCount],
+                              backgroundColor: [
+                                'teal',
+                                'grey',
+                                'brown'
+                              ],
+              
+                              borderWidth: 1
+                            }]
+                          },
+                          options: {
+                            // ...
+                          }
+                        });
+                        function downloadpieChart() {
+                          var chartCanvas = document.getElementById('piechart');
+                          var dataURL = chartCanvas.toDataURL('image/png');
+                          var link = document.createElement('a');
+                          link.download = 'chart.png';
+                          link.href = dataURL;
+                          link.click();
+                        }
+                      </script>
+              
+              
+                    </div>
+              
+                  </div>
+              
+              
+              
+                </div>
+                </div>
+                </div>
+                </body>
+                <%if(message){%>
+                  <script>
+                    new Swal({
+                      title: "Success",
+                      text: "<%=message%>",
+                      icon: "success",
+                      showConfirmButton: false,
+                      timer: 2000
+                    });
+                  </script>
+              
+                  <%}%>
+              
+                    <script>
+              
+                      const daily = '<%= JSON.stringify(dailySalesDetails) %>';
+                      const data = JSON.parse(daily.replace(/&#34;/g, '"'));
+                      // Create an array of days in the current month
+                      const currentDate = new Date();
+                      const currentDay = currentDate.getDate();
+                      const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
+                      const daysArray = Array.from({ length: daysInMonth }, (_, i) => i);
+              
+                      const totalSalesArray = daysArray.map(day => {
+                        const matchingData = data.find(d => new Date(d.date).getDate() === day);
+                        console.log(matchingData);
+                        if (day <= currentDay) {
+                          return matchingData ? matchingData.totalSales : 0;
+                        } else {
+                          return null;
+                        }
+                      });
+                      console.log(totalSalesArray);
+              
+              
+                      const ctx = document.getElementById('lineChart');
+                      ctx.width = 600;
+                      ctx.height = 200;
+                      new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                          labels: daysArray,
+                          datasets: [{
+                            label: 'Total Sales',
+                            data: totalSalesArray,
+                            borderWidth: 2,
+                            borderColor: 'red',
+                            backgroundColor: 'red',
+                            tension: 0.4
+                          }]
+              
+                        }, options: {
+                          plugins: {
+                            title: {
+                              display: true,
+                              text: 'Daily Sales',
+                              font: {
+                                size: 18,
+                                weight: 'bold',
+                              }
+                            },
+                            legend: {
+                              labels: {
+                                font: {
+                                  color: 'white',
+                                  weight: 'bold',
+                                }
+                              }
+                            }
+                          }
+                        },
+              
+                        options: {
+                          scales: {
+                            y: {
+                              ticks: {
+                                color: 'white',
+                                beginAtZero: true,
+                                stepSize: 1000,
+                                max: 10000,
+                                font: {
+                                  size: 14,
+                                  color: '#555'
+                                }
+                              },
+              
+                              title: {
+                                display: true,
+                                text: 'Daily Sales',
+                                color: 'red',
+              
+              
+                              },
+                              grid: {
+                                color: 'grey'
+                              }
+                            },
+                            x: {
+                              ticks: {
+                                color: 'white',
+                                font: {
+                                  size: 14,
+              
+                                }
+                              },
+                              title: {
+                                display: true,
+                                text: 'Daily Sales',
+                                color: 'red',
+                              },
+                              grid: {
+                                color: 'grey',
+                                display: true
+                              }
+                            }
+                          }
+                        }
+                      });
+              
+                      function downloadlineChart() {
+                        var chartCanvas = document.getElementById('lineChart');
+                        var dataURL = chartCanvas.toDataURL('image/png');
+                        var link = document.createElement('a');
+                        link.download = 'chart.png';
+                        link.href = dataURL;
+                        link.click();
+                      }
+              
+                    </script>
+              
+                    <%- include ('../adminLayout/adminFooter') -%>
+
+
+
+      

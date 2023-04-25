@@ -1,0 +1,89 @@
+<%- include('../layouts/header.ejs'); -%>
+    <div class="container">
+        <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+
+        </div>
+    </div>
+    <div id="page">
+
+        <div class="container">
+            <div class="mt-5 ">
+                <h4></h4>
+            </div>
+        </div>
+        <section class="mt-5 mb-5">
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="user-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Order ID & Orderd Date</th>
+
+                                <th scope="col">Expected delivery date</th>
+
+                                <th scope="col">Total Bill</th>
+                                <th scope="col">Payment Method</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Details</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <% orderData.forEach(element=> {
+
+
+
+                                for( let i = 0; i <1 ; i++ ) { %>
+
+
+                                    <tr>
+
+                                        <td scope="row">
+                                            <div>Order ID :<%=orderData[i]._id%>
+                                            </div>
+                                            <div>Orderd Date :<%=new
+                                                    Date(element.order[i].date).toLocaleDateString('en-GB')%>
+                                            </div>
+
+                                        </td>
+
+                                        <td>
+
+                                            <div>
+                                                <%=new Date(element.order[i].arrivingDate).toLocaleDateString('en-GB')%>
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div>₹ <%=element.grandTotal %>
+                                            </div>
+
+                                        </td>
+
+                                        <td>
+                                            <div>
+                                                <%=element.paymentMethod %>
+                                            </div>
+                                        </td>
+                                        <td>
+
+                                            <div><br>
+                                                <%=element.order[i].status %>
+                                            </div>
+                                        </td>
+
+                                        <td><a href="/orderView?id=<%=element._id %>"
+                                                class="btn btn-primary">Details</a></td>
+                                    </tr>
+                                    <% }%>
+                                        <% })%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <%- include('../layouts/footer.ejs'); -%>
