@@ -231,7 +231,7 @@ const loadDashbord = async (req, res) => {
             }
         ]);
 
-        res.render("ahome", {
+        res.render("aHome", {
             dailySalesReport,
             weeklySalesReport,
             yearlySalesReport,
