@@ -3330,7 +3330,6 @@ input.num-product::-webkit-inner-spin-button {
   }
 
 }
-.filter{
-  position: relative; 
-  height: 70% !important;
+#filter{
+  min-height: 410px;
 }
