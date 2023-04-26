@@ -443,7 +443,7 @@
                                     <div class="row  mb-4">
                                         <input class="btn" data-toggle="modal" data-target="#myModal"
                                             style="font-family: 'Nike Futura','Helvetica Neue',Helvetica,Arial,sans-serif; color: white; border-radius: 50px; background-color: black; height: 53px; width: 100%; max-width: 318px;"
-                                            placeholder="Select address">
+                                            value="Select address">
 
 
                                     </div>
@@ -523,8 +523,9 @@
 
                                         <h4>Your Order</h4>
                                         <div class="checkout_order_products">PRODUCTS <span>TOTAL</span></div>
+                                        <% for( let i=0; i < cartData.cart.length; i++ ) { %>
                                         <ul>
-                                            <% for( let i=0; i < cartData.cart.length; i++ ) { %>
+                                            
 
 
                                                 <li>
@@ -532,8 +533,9 @@
                                                             ₹<%=cartData.cart[i].total%>
                                                         </span>
                                                 </li>
-                                                <% } %>
+                                                
                                         </ul>
+                                        <% } %>
                                         <ul>
                                             <li>
                                                 SUBTOTAL <span id="total">
