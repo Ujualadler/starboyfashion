@@ -37,7 +37,7 @@ const sendVerifyMail = async (name, email, user_id) => {
         from: "ujualk2020@gmail.com",
         to: email,
         subject: "To verify your mail",
-        html: '<p>Hii&nbsp' + name + 'Please click here to <a href="http://localhost:3000/verify?_id=' + user_id + '">Verify</a>your mail</p>'
+        html: '<p>Hii&nbsp' + name + 'Please click here to <a href="http://mongodb+srv://ujualk2000:ujual2000@cluster0.3picv2k.mongodb.net/starBoy/verify?_id=' + user_id + '">Verify</a>your mail</p>'
       };
   
       transporter.sendMail(mailOption, function (error, info) {
@@ -291,6 +291,7 @@ const verifyOtpLogin = async (req, res) => {
         res.render('otpverification', { mes });
       }
     } catch (error) {
+      console.log(error)
       res.status(500).send('Server Error');
     }
   };

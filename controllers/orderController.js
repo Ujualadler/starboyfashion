@@ -340,18 +340,7 @@ const returnOrder = async (req, res) => {
             if (daysDiff > 5) {
                 await Order.updateOne({ _id: id, 'order._id': element }, { $set: { 'order.$.status': 'ReturnPeriodExceeded' } });
             } else {
-                await Order.updateOne({ _id: id, 'order._id': element }, { $set: { 'order.$.status': 'ReturnPending' } });
-
-                // order.order.forEach(async (element) => {
-                //     const product = await Product.findByIdAndUpdate({ _id: element.product });
-                //     const inventoryUpdate = await Product.updateOne({ _id: element.product }, { $inc: { quantity: element.quantity } });
-                // });
-
-                // if (userData.wallet) {
-                //     const walletNew = await User.updateOne({ _id: userId }, { $set: { wallet: walletData } });
-                // } else {
-                //     const walletNew = await User.updateOne({ _id: userId }, { $set: { wallet: gTotal } });
-                // }
+                await Order.updateOne({ _id: id, 'order._id': element }, { $set: { 'order.$.status': 'ReturnPending' } })
             }
         });
 
