@@ -301,15 +301,15 @@ const verifyOtpLogin = async (req, res) => {
 const otpVerification = async (req, res) => {
     const { otp } = req.body;
     const phone = req.session.phone;
+    const userData =await User.findOne({ mobile: phone });
+
   
     try {
       const verificationCheck = await client.verify.v2.services(verifySid)
         .verificationChecks.create({ to: `+91${phone}`, code: otp })
         .then((verificationCheck) => {
           if (verificationCheck.status == 'approved') {
-            const userData = User.findOne({ mobile: phone });
             req.session.user_Id = userData._id;
-            req.session.otpcorrect = true;
             res.redirect('/');
           } else {
             res.render('otpverification', { mes: 'Invalid OTP' });
