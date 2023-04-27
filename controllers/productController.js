@@ -35,38 +35,8 @@ const verifyaddProduct = async (req, res) => {
       for (let i = 0; i < req.files.length; i++) {
         const extension = req.files[i].filename.split('.').pop().toLowerCase();
         if (validExtensions.includes(extension)) {
-          let image = req.files.map((file) => file);
-          for (i = 0; i < req.files.length; i++) {
-            let path = image[i].path;
-            const processImage = new Promise((resolve, reject) => {
-              sharp(path)
-                .rotate()
-                .resize(864, 1080)
-                .toFile("public/img/" + image[i].filename, (err) => {
-                  sharp.cache(false);
-                  if (err) {
-                    reject(err);
-                  } else {
-                    console.log(`Processed file: ${path}`);
-                    resolve();
-                  }
-                });
-            });
-            processImage
-              .then(() => {
-                fs.unlink(path, (err) => {
-                  if (err) {
-                    console.log(err);
-                  } else {
-                    console.log(`Deleted file: ${path}`);
-                  }
-                });
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-
-          }
+          if(req.files.length == i ) break;
+          images[i] = req.files[i].filename;
         }
       }
 
