@@ -12,7 +12,7 @@ let cartMessage
 
 let verifySid = "VAfbd945e474f30e60fd55799a3fcb274a"
 let accountsid = "AC525b076acec61ca48f2b40ea8c85c3a7"
-let authtoken = "532e1087d1187bf18e9d5b0bfff48bbd"
+let authtoken = "93904b903ebc763e32008e7aba7e2f55"
 
 // email verification
 
