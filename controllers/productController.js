@@ -50,7 +50,7 @@ const verifyaddProduct = async (req, res) => {
           description: req.body.description,
           brand: req.body.brand,
           size: req.body.size,
-          image: req.files.map((file) => file.filename)
+          image:images,
         })
 
         const productData = await product.save()
