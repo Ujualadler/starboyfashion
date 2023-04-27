@@ -1,8 +1,8 @@
 
 const Product = require('../models/productModel')
 const Category = require("../models/categoryModel")
-const sharp = require('sharp')
-const fs = require("fs")
+// const sharp = require('sharp')
+// const fs = require("fs")
 
 let mes
 let message
