@@ -308,7 +308,7 @@ const otpVerification = async (req, res) => {
         .then((verificationCheck) => {
           if (verificationCheck.status == 'approved') {
             const userData = User.findOne({ mobile: phone });
-            req.session.userId = userData._id;
+            req.session.user_Id = userData._id;
             req.session.otpcorrect = true;
             res.redirect('/');
           } else {
